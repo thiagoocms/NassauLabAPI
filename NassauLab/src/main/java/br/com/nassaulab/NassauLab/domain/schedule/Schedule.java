@@ -2,6 +2,9 @@ package br.com.nassaulab.NassauLab.domain.schedule;
 
 import br.com.nassaulab.NassauLab.domain.course.Course;
 import br.com.nassaulab.NassauLab.domain.teacher.Teacher;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -11,7 +14,10 @@ import java.util.UUID;
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
 

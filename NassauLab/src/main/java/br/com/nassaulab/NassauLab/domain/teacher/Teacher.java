@@ -1,6 +1,9 @@
 package br.com.nassaulab.NassauLab.domain.teacher;
 
 import br.com.nassaulab.NassauLab.domain.course.Course;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +13,10 @@ import java.util.UUID;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "registration", updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID registration;
 
     @Column(name = "name")

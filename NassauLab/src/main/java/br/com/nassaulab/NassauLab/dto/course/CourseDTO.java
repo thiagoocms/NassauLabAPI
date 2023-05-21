@@ -2,7 +2,10 @@ package br.com.nassaulab.NassauLab.dto.course;
 
 import br.com.nassaulab.NassauLab.domain.teacher.Teacher;
 import br.com.nassaulab.NassauLab.dto.teacher.TeacherDTO;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ public class CourseDTO {
 
     private String shift;
 
+    @JsonIgnore
     private Teacher teacher;
 
     public CourseDTO() {

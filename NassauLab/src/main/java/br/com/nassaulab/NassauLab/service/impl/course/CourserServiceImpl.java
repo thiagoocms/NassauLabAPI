@@ -18,17 +18,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CourserServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
-    public CourserServiceImpl(CourseRepository courseRepository) {
+    public CourserServiceImpl(CourseRepository courseRepository,
+                              TeacherRepository teacherRepository) {
         this.courseRepository = courseRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
@@ -59,6 +64,32 @@ public class CourserServiceImpl implements CourseService {
         BeanUtils.copyProperties(courseOptional.get(), courseDTO);
 
         return courseDTO;
+    }
+
+    @Override
+    public List<CourseDTO> getAllByTeacher(UUID teacherRegistration) {
+
+        List<Course> courseList = this.courseRepository.findAllByTeacherRegistration(teacherRegistration);
+
+        return courseList.stream().map(course -> {
+            CourseDTO courseDTO = new CourseDTO();
+            BeanUtils.copyProperties(course, courseDTO);
+
+            return courseDTO;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CourseDTO> getAll() {
+
+        List<Course> courseList = this.courseRepository.findAll();
+
+        return courseList.stream().map(course -> {
+            CourseDTO courseDTO = new CourseDTO();
+            BeanUtils.copyProperties(course, courseDTO);
+
+            return courseDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override

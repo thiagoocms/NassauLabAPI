@@ -1,6 +1,9 @@
 package br.com.nassaulab.NassauLab.domain.course;
 
 import br.com.nassaulab.NassauLab.domain.teacher.Teacher;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,7 +13,10 @@ import java.util.UUID;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
     @Column(name = "name")
     private String name;
@@ -21,6 +27,7 @@ public class Course {
     @Column(name = "shift")
     private String shift;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "teacher_registration")
     private Teacher teacher;

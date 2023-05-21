@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -49,5 +50,25 @@ public class CourseResource {
     public ResponseEntity<Void> delete(@PathVariable("id") UUID id){
         this.courseService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/courses/byTeacher/{registration}",
+            produces = "application/json"
+    )
+    public ResponseEntity<List<CourseDTO>> getAllByTeacher(UUID teacherRegistration){
+        List<CourseDTO> courseDTOList = this.courseService.getAllByTeacher(teacherRegistration);
+        return new ResponseEntity<>(courseDTOList ,HttpStatus.OK);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/courses",
+            produces = "application/json"
+    )
+    public ResponseEntity<List<CourseDTO>> getAll(){
+        List<CourseDTO> courseDTOList = this.courseService.getAll();
+        return new ResponseEntity<>(courseDTOList ,HttpStatus.OK);
     }
 }
