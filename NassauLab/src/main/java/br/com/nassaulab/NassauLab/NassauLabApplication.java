@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition(
 		info = @Info(title = "NassauLabApi",version = "1.0.0", description = "project of Spring Boot for app Back and"),
 		servers = {
-				@Server(url = "http://localhost:5000")
+				@Server(url = "https://nassaulabapi-production-32e9.up.railway.app")
 		}
 
 )
